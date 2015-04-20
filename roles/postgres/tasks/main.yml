@@ -1,0 +1,33 @@
+- name: Install PostgreSQL if this wasn't earlier
+  apt: name={{ item }}
+  sudo: yes
+  with_items:
+    - postgresql
+    - python-psycopg2
+    - libpq-dev
+
+- name: Install `postfix` if this wasn't done earlier
+  apt: name=postfix
+  sudo: yes
+
+
+- name: Create postgresql user
+  sudo: yes
+  postgresql_user:
+    login_host: "{{ postgres_host }}"
+    port: "{{ postgres_port }}"
+    db: "{{ postgres_name }}"
+    name: "{{ postgres_user }}"
+    password: "{{ postgres_password }}"
+    role_attr_flags: "CREATEDB,LOGIN,REPLICATION"
+    state: absent
+
+- name: Create postgresql database
+  postgresql_db:
+    name: "{{ postgres_name }}"
+    encoding: 'UTF-8'
+    lc_collate: 'ru_RU.UTF-8'
+    lc_ctype: 'ru_RU.UTF-8'
+    template: 'template0'
+    state: absent
+

@@ -1,0 +1,3 @@
+- name: Install `Rabbit MQ` queue server if this wasn't done earlier
+  apt: name=rabbitmq-server
+  sudo: yes

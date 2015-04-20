@@ -1,0 +1,13 @@
+[user]
+    name = {{ maintainer_name }}
+    email = {{ maintainer_email }}
+
+[color]
+    ui = true
+
+[alias]
+    st = status
+    co = checkout
+    ci = commit
+    hist = log --format=\"%h %ad | %s%d [%an]\" --graph --date=short
+

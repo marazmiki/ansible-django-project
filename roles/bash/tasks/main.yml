@@ -1,0 +1,57 @@
+- name: Install client soft if this wasn't done earlier
+  apt: name={{ item }}
+  sudo: yes
+  with_items:
+    - mc
+    - vim
+    - tmux
+
+- name: Check if home directory already exists
+  stat: path={{ homedir }}
+  register: homedir_exists
+
+- name: Create home directory
+  file:
+    path: "{{ homedir }}"
+    state: directory
+  when: not homedir_exists.stat.exists
+
+- name: Check if project directory already exists
+  stat: path={{ project_root }}
+  register: project_root_exists
+
+- name: Create project directory
+  file:
+    path: "{{ project_root }}"
+    state: directory
+  when: not project_root_exists.stat.exists
+
+- name: Create .bashrc
+  template:
+    src: ".bashrc"
+    dest: "{{ homedir }}/.bashrc"
+
+- name: Create .bash_profile
+  template:
+    src: ".bash_profile"
+    dest: "{{ homedir }}/.bashrc"
+
+- name: Create .django_bash_completion
+  template:
+    src: ".django_bash_completion"
+    dest: "{{ homedir }}/.bashrc"
+
+- name: Create .gitconfig
+  template:
+    src: ".gitconfig"
+    dest: "{{ homedir }}/.gitconfig"
+
+- name: Create .selected_editor
+  template:
+    src: ".selected_editor"
+    dest: "{{ homedir }}/.selected_editor"
+
+- name: Create .env file
+  template:
+    src: ".env"
+    dest: "{{ project_root }}/.env"

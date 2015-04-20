@@ -1,0 +1,33 @@
+- hosts: digital_ocean
+  vars:
+    # Core settings
+    - maintainer_email: marazmiki@gmail.com
+    - maintainer_name: Mikhail Porokhovnichenko
+    - homedir: /root/test_ansible
+    - project_root: "{{ homedir }}/proj"
+    - project_app: project
+    - virtualenv_name: .virtualenv
+
+    # Postgre role settings
+    - postgres_host: 127.0.0.1
+    - postgres_port: 5432
+    - postgres_name: pg_database
+    - postgres_user: postgres_user
+    - postgres_password: postgres_password
+
+    #  RabbitMQ settings
+    - rabbitmq_host: '127.0.0.1'
+    - rabbitmq_port: 5672
+    - rabbitmq_user: rabbitmq_user
+    - rabbitmq_pass: rabbitmq_password
+
+    # Redis settings
+
+  roles:
+    - role: python_dev
+    - role: redis
+    - role: rabbitmq
+    - role: postgres
+    - role: email
+    - role: bash
+    - role: django

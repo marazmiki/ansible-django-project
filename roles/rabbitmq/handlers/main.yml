@@ -1,0 +1,3 @@
+handlers:
+  - name: restart rabbitmq
+    service: name=rabbitmq-server state=restarted

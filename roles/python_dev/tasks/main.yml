@@ -1,0 +1,14 @@
+- name: Install core dependencies if this wasn't done earlier
+  apt: name={{ item }}
+  sudo: yes
+  with_items:
+    - python-dev
+    - python-virtualenv
+    - python-pip
+    - git
+    - subversion
+    - libpq-dev
+    - libgif-dev
+    - libjpeg62-dev
+    - libpng12-dev
+    - libxslt1-dev
