@@ -1,0 +1,5 @@
+- name: Create .env file
+  template:
+    src: ".env"
+    dest: "{{ project_root }}/.env"
+

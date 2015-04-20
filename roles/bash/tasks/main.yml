@@ -50,8 +50,3 @@
   template:
     src: ".selected_editor"
     dest: "{{ homedir }}/.selected_editor"
-
-- name: Create .env file
-  template:
-    src: ".env"
-    dest: "{{ project_root }}/.env"
