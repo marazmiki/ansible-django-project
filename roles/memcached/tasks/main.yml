@@ -1,0 +1,6 @@
+- name: Install PostgreSQL if this wasn't earlier
+  apt: name={{ item }}
+  sudo: yes
+  with_items:
+    - memcached
+    - libmemcached-dev
