@@ -8,7 +8,7 @@
     - project_app: project
     - virtualenv_name: .virtualenv
 
-    # Postgre role settings
+    # Postgres role settings
     - postgres_host: 127.0.0.1
     - postgres_port: 5432
     - postgres_name: pg_database
