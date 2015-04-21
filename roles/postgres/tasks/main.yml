@@ -6,10 +6,6 @@
     - python-psycopg2
     - libpq-dev
 
-- name: Install `postfix` if this wasn't done earlier
-  apt: name=postfix
-  sudo: yes
-
 - name: Ensure postgres database {{ postgres_name }} is exists
   sudo: yes
   sudo_user: postgres
