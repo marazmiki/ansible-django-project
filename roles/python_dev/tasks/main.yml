@@ -7,6 +7,7 @@
     - python-pip
     - git
     - subversion
+    - libmemcached-dev
     - libpq-dev
     - libgif-dev
     - libjpeg62-dev
