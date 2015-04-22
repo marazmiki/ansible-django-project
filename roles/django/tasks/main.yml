@@ -3,3 +3,10 @@
     src: ".env"
     dest: "{{ project_root }}/.env"
 
+- name: Pull project from git repository
+  git:
+    repo: "{{ project_repo_url }}"
+    dest: "{{ project_root }}/{{ project_app }}"
+    accept_hostkey: true
+    version: "{{ project_repo_branch }}"
+
