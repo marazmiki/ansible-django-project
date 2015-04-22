@@ -1,15 +1,17 @@
 - hosts: digital_ocean
+  accelerate: false
   vars:
     # Core settings
     - maintainer_email: marazmiki@gmail.com
     - maintainer_name: Mikhail Porokhovnichenko
-    - homedir: /root/test_ansible
-    - project_root: "{{ homedir }}/proj"
+    - user: nopox
+    - homedir: "/home/{{ user }}"
     - project_app: project
+    - project_root: "{{ homedir }}/{{ project_app }}"
     - project_repo_url: "https://github.com/marazmiki/django-comments-threaded"
     - project_repo_branch: "master"
-    - virtualenv_name: "{{ project_root }}/{{ project_app }}/.virtualenv"
-    - requirements_file: "{{ project_root }}/{{ project_app }}/requirements-dev.txt"
+    - virtualenv_name: "{{ project_root }}/.virtualenv"
+    - requirements_file: "{{ project_root }}/requirements-dev.txt"
 
     # Postgres role settings
     - postgres_host: 127.0.0.1
@@ -34,11 +36,11 @@
     - memcache_port: 11211
 
   roles:
+    - role: bash
     - role: python_dev
     - role: memcached
     - role: redis
     - role: rabbitmq
     - role: postgres
     - role: email
-    - role: bash
     - role: django
