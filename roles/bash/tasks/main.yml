@@ -1,3 +1,7 @@
+- name: Create locales
+  sudo: yes
+  locale_gen: name=ru_RU.UTF-8 state=present
+
 - name: Install client soft if this wasn't done earlier
   apt: name={{ item }}
   sudo: yes
@@ -5,6 +9,13 @@
     - mc
     - vim
     - tmux
+
+- name: Create user
+  user: name={{ user }}
+        createhome=yes 
+        state=present
+        comment="A {{ project_app }} user"
+  register: create_new_user
 
 - name: Check if home directory already exists
   stat: path={{ homedir }}
@@ -14,39 +25,56 @@
   file:
     path: "{{ homedir }}"
     state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
   when: not homedir_exists.stat.exists
 
 - name: Check if project directory already exists
   stat: path={{ project_root }}
   register: project_root_exists
 
+- name: Set up authorized_keys for the deploy user
+  authorized_key: user={{ user }} key=https://github.com/marazmiki.keys
+
 - name: Create project directory
   file:
     path: "{{ project_root }}"
     state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
   when: not project_root_exists.stat.exists
 
 - name: Create .bashrc
   template:
     src: ".bashrc"
     dest: "{{ homedir }}/.bashrc"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
 - name: Create .bash_profile
   template:
     src: ".bash_profile"
     dest: "{{ homedir }}/.bashrc"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
 - name: Create .django_bash_completion
   template:
     src: ".django_bash_completion"
     dest: "{{ homedir }}/.bashrc"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
 - name: Create .gitconfig
   template:
     src: ".gitconfig"
     dest: "{{ homedir }}/.gitconfig"
+    owner: "{{ user }}"
+    group: "{{ user }}"
 
 - name: Create .selected_editor
   template:
     src: ".selected_editor"
     dest: "{{ homedir }}/.selected_editor"
+    owner: "{{ user }}"
+    group: "{{ user }}"

@@ -1,24 +1,33 @@
-- name: Create .env file
-  template:
-    src: ".env"
-    dest: "{{ project_root }}/{{ project_app }}/.env"
-
 - name: Pull project from git repository
+  sudo: true
+  sudo_user: "{{ user }}"
   git:
     repo: "{{ project_repo_url }}"
-    dest: "{{ project_root }}/{{ project_app }}"
+    dest: "{{ project_root }}"
     accept_hostkey: true
     version: "{{ project_repo_branch }}"
+
+- name: Create .env file
+  template:
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    src: ".env"
+    dest: "{{ project_root }}/.env"
+
 
 - name: Check if virtualenv already exists
   stat: path={{ virtualenv_name }}
   register: virtualenv_exists
 
 - name: Create virtualenv for Django web application
+  sudo: true
+  sudo_user: "{{ user }}"
   shell: virtualenv {{ virtualenv_name }}
   when: not virtualenv_exists.stat.exists
 
 - name: Install required packages from requirements.txt
+  sudo: true
+  sudo_user: "{{ user }}"
   pip:
     requirements: "{{ requirements_file }}"
     virtualenv: "{{ virtualenv_name }}"
