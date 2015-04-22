@@ -1,4 +1,4 @@
-- name: Install PostgreSQL if this wasn't earlier
+- name: Install memcached (service and header files) if this wasn't earlier
   apt: name={{ item }}
   sudo: yes
   with_items:
