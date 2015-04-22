@@ -1,7 +1,7 @@
 - name: Create .env file
   template:
     src: ".env"
-    dest: "{{ project_root }}/.env"
+    dest: "{{ project_root }}/{{ project_app }}/.env"
 
 - name: Pull project from git repository
   git:
@@ -9,4 +9,3 @@
     dest: "{{ project_root }}/{{ project_app }}"
     accept_hostkey: true
     version: "{{ project_repo_branch }}"
-
