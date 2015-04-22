@@ -6,7 +6,10 @@
     - homedir: /root/test_ansible
     - project_root: "{{ homedir }}/proj"
     - project_app: project
-    - virtualenv_name: .virtualenv
+    - project_repo_url: "https://github.com/marazmiki/django-comments-threaded"
+    - project_repo_branch: "master"
+    - virtualenv_name: "{{ project_root }}/{{ project_app }}/.virtualenv"
+    - requirements_file: "{{ project_root }}/{{ project_app }}/requirements-dev.txt"
 
     # Postgres role settings
     - postgres_host: 127.0.0.1
