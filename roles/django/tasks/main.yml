@@ -9,3 +9,17 @@
     dest: "{{ project_root }}/{{ project_app }}"
     accept_hostkey: true
     version: "{{ project_repo_branch }}"
+
+- name: Check if virtualenv already exists
+  stat: path={{ virtualenv_name }}
+  register: virtualenv_exists
+
+- name: Create virtualenv for Django web application
+  shell: virtualenv {{ virtualenv_name }}
+  when: not virtualenv_exists.stat.exists
+
+- name: Install required packages from requirements.txt
+  pip:
+    requirements: "{{ requirements_file }}"
+    virtualenv: "{{ virtualenv_name }}"
+

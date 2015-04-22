@@ -8,7 +8,8 @@
     - project_app: project
     - project_repo_url: "https://github.com/marazmiki/django-comments-threaded"
     - project_repo_branch: "master"
-    - virtualenv_name: .virtualenv
+    - virtualenv_name: "{{ project_root }}/{{ project_app }}/.virtualenv"
+    - requirements_file: "{{ project_root }}/{{ project_app }}/requirements-dev.txt"
 
     # Postgre role settings
     - postgres_host: 127.0.0.1
