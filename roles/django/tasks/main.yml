@@ -7,6 +7,7 @@
     accept_hostkey: true
     version: "{{ project_repo_branch }}"
 
+
 - name: Create .env file
   template:
     owner: "{{ user }}"
@@ -19,11 +20,13 @@
   stat: path={{ virtualenv_name }}
   register: virtualenv_exists
 
+
 - name: Create virtualenv for Django web application
   sudo: true
   sudo_user: "{{ user }}"
   shell: virtualenv {{ virtualenv_name }}
   when: not virtualenv_exists.stat.exists
+
 
 - name: Install required packages from requirements.txt
   sudo: true
@@ -31,4 +34,3 @@
   pip:
     requirements: "{{ requirements_file }}"
     virtualenv: "{{ virtualenv_name }}"
-

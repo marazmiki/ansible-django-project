@@ -34,7 +34,7 @@
   register: project_root_exists
 
 - name: Set up authorized_keys for the deploy user
-  authorized_key: user={{ user }} key=https://github.com/marazmiki.keys
+  authorized_key: user={{ user }} key=https://github.com/marazmiki.keys state=present
 
 - name: Create project directory
   file:

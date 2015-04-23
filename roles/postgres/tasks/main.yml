@@ -6,22 +6,45 @@
     - python-psycopg2
     - libpq-dev
 
-- name: Create postgresql user
+- name: ensure database is created
   sudo: yes
   sudo_user: postgres
-  # postgresql_user: db={{ postgres_name }} name={{ postgres_user }} password={{ postgres_password }} priv=ALL
-  postgresql_user: user={{ postgres_user }} password={{ postgres_password }} role_attr_flags=LOGIN 
+  postgresql_db: name={{ postgres_name }}
 
-- name: Ensure postgres database {{ postgres_name }} is exists
+- name: ensure user has access to database
   sudo: yes
   sudo_user: postgres
-  # postgresql_db: name={{ postgres_name }} template=template0 encoding="UTF_8"
-  postgresql_db: name={{ postgres_name }} 
-                 owner={{ postgres_user }} 
-                 encoding='UTF8'
-                 lc_collate='ru_RU.UTF-8' 
-                 lc_ctype='ru_RU.UTF-8' 
-                 template='template0'
-                 state=present
+  postgresql_user: db={{ postgres_name }} name={{ postgres_user }} password={{ postgres_password }} priv=ALL
+
+- name: ensure user does not have unnecessary privilege
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: name={{ postgres_user }} role_attr_flags=NOSUPERUSER
+
+
+#- name: Create postgresql user
+#  sudo: yes
+#  sudo_user: postgres
+#  postgresql_user: name={{ postgres_user }} password={{ postgres_password }} priv=ALL
+#
+#- name: Ensure postgres database {{ postgres_name }} is exists
+#  sudo: yes
+#  sudo_user: postgres
+#  # postgresql_db: name={{ postgres_name }} template=template0 encoding="UTF_8"
+#  postgresql_db: name={{ postgres_name }} 
+#                 owner={{ postgres_user }} 
+#                 encoding='UTF8'
+#                 lc_collate='ru_RU.UTF-8' 
+#                 lc_ctype='ru_RU.UTF-8' 
+#                 template='template0'
+#                 state=present
+#
+#- name: Create postgresql user22222
+#  sudo: yes
+#  sudo_user: postgres
+#  postgresql_user: db={{ postgres_name }} name={{ postgres_user }} password={{ postgres_password }} priv=ALL
+#
+#- name: Ensure user doesn't have unnecessary privilegies
+#  postgresql_user: name={{ postgres_user }} role_attr_flags=NOSUPERUSER,NOCREATEROLE
 
 
